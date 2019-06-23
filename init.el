@@ -5,6 +5,8 @@
 ;;; none
 
 ;;; Code:
+(setq user-emacs-directory (file-truename "~/.emacs.d/")) ;Unfolds the link to user emacs directory
+
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -37,10 +39,10 @@
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("100eeb65d336e3d8f419c0f09170f9fd30f688849c5e60a801a1e6addd8216cb" "d83e34e28680f2ed99fe50fea79f441ca3fddd90167a72b796455e791c90dc49" "4feee83c4fbbe8b827650d0f9af4ba7da903a5d117d849a3ccee88262805f40d" "527df6ab42b54d2e5f4eec8b091bd79b2fa9a1da38f5addd297d1c91aa19b616" default)))
+    ("732ccca2e9170bcfd4ee5070159923f0c811e52b019106b1fc5eaa043dff4030" "0961d780bd14561c505986166d167606239af3e2c3117265c9377e9b8204bf96" "a61109d38200252de49997a49d84045c726fa8d0f4dd637fce0b8affaa5c8620" "100eeb65d336e3d8f419c0f09170f9fd30f688849c5e60a801a1e6addd8216cb" "d83e34e28680f2ed99fe50fea79f441ca3fddd90167a72b796455e791c90dc49" "4feee83c4fbbe8b827650d0f9af4ba7da903a5d117d849a3ccee88262805f40d" "527df6ab42b54d2e5f4eec8b091bd79b2fa9a1da38f5addd297d1c91aa19b616" default)))
  '(package-selected-packages
    (quote
-    (yaml-mode slime ensime espresso auctex yasnippet-snippets yasnippet company company-mode helm-projectile hel-projectile haskell-mode projectile tide web-mode rjsx-mode flycheck js2-mode js2-jsx-mode ag evil-collection magit helm-ag helm evil-visual-mark-mode))))
+    (prettier-js flx-ido helm-flx which-key powerline yaml-mode slime ensime espresso auctex yasnippet-snippets yasnippet company company-mode helm-projectile hel-projectile haskell-mode projectile tide web-mode rjsx-mode flycheck js2-mode js2-jsx-mode ag evil-collection magit helm-ag helm evil-visual-mark-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -54,8 +56,6 @@
 
 (add-to-list 'default-frame-alist '(font . "Source Code Pro Medium-11"))
 (set-face-attribute 'default t :font "Source Code Pro Medium-11")
-
-(tool-bar-mode -1)
 
 ;; show-paren-mode settings
 (setq show-paren-delay 0)
@@ -145,13 +145,23 @@
     
   (helm-mode 1))
 
+(use-package flx-ido
+  :ensure t
+  :config
+  
+  (use-package helm-flx
+    :ensure t
+    :after helm
+    :config
+    (helm-flx-mode +1)))
+
 (use-package magit
   :ensure t)
 
 (use-package projectile
   :ensure t
   :init
-  (setq projectile-project-search-path '("~/sellpy/" "~/code/"))
+  (setq projectile-project-search-path '("~/sellpy/" "~/code/" "~/.emacs.configs"))
   :config
   (evil-define-key 'motion 'global (kbd "M-p") 'projectile-command-map)
   (projectile-mode +1))
@@ -169,7 +179,9 @@
   :init
   (global-flycheck-mode)
   (add-to-list 'safe-local-variable-values
-               '(flycheck-javascript-standard-executable . "~/sellpy/admin/node_modules/.bin/standard"))
+               '(flycheck-javascript-standard-executable . "~/sellpy/sellpy/node_modules/.bin/standard"))
+  (add-to-list 'safe-local-variable-values
+               '(flycheck-javascript-standard-executable . "~/sellpy/admin/node_modules/.bin/eslint"))
   (add-to-list 'safe-local-variable-values
                '(flycheck-javascript-standard-executable . "~/sellpy/parsoku/node_modules/.bin/standard"))
   (add-to-list 'safe-local-variable-values
@@ -281,6 +293,23 @@
 
 (use-package yaml-mode
   :ensure t)
+
+(use-package powerline
+  :ensure t
+  :config
+  (powerline-default-theme))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+(use-package prettier-js
+  :ensure t)
+
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
 
 (provide 'init)
 ;;; init.el ends here
