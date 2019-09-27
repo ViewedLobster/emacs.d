@@ -40,9 +40,10 @@
  '(custom-safe-themes
    (quote
     ("732ccca2e9170bcfd4ee5070159923f0c811e52b019106b1fc5eaa043dff4030" "0961d780bd14561c505986166d167606239af3e2c3117265c9377e9b8204bf96" "a61109d38200252de49997a49d84045c726fa8d0f4dd637fce0b8affaa5c8620" "100eeb65d336e3d8f419c0f09170f9fd30f688849c5e60a801a1e6addd8216cb" "d83e34e28680f2ed99fe50fea79f441ca3fddd90167a72b796455e791c90dc49" "4feee83c4fbbe8b827650d0f9af4ba7da903a5d117d849a3ccee88262805f40d" "527df6ab42b54d2e5f4eec8b091bd79b2fa9a1da38f5addd297d1c91aa19b616" default)))
+ '(delete-selection-mode nil)
  '(package-selected-packages
    (quote
-    (prettier-js flx-ido helm-flx which-key powerline yaml-mode slime ensime espresso auctex yasnippet-snippets yasnippet company company-mode helm-projectile hel-projectile haskell-mode projectile tide web-mode rjsx-mode flycheck js2-mode js2-jsx-mode ag evil-collection magit helm-ag helm evil-visual-mark-mode))))
+    (markdown-mode ggtags prettier-js flx-ido helm-flx which-key powerline yaml-mode slime ensime espresso auctex yasnippet-snippets yasnippet company company-mode helm-projectile hel-projectile haskell-mode projectile tide web-mode rjsx-mode flycheck js2-mode js2-jsx-mode ag evil-collection magit helm-ag helm evil-visual-mark-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -98,7 +99,7 @@
 (use-package base16-theme
   :ensure t
   :config
-  (load-theme 'base16-gruvbox-dark-medium t))
+  (load-theme 'base16-atelier-heath-light t))
 
 (use-package ag
   :ensure t)
@@ -161,7 +162,7 @@
 (use-package projectile
   :ensure t
   :init
-  (setq projectile-project-search-path '("~/sellpy/" "~/code/" "~/.emacs.configs"))
+  (setq projectile-project-search-path '("~/sellpy/" "~/emacs.configs"))
   :config
   (evil-define-key 'motion 'global (kbd "M-p") 'projectile-command-map)
   (projectile-mode +1))
@@ -171,7 +172,7 @@
 
 (require 'fixme-mode)
 (setq fixme-background-color nil)
-(setq fixme-foreground-color "Yellow")
+(setq fixme-foreground-color "Orange")
 ;; (add-hook 'prog-mode-hook 'fixme-mode t)
 
 (use-package flycheck
@@ -179,13 +180,13 @@
   :init
   (global-flycheck-mode)
   (add-to-list 'safe-local-variable-values
-               '(flycheck-javascript-standard-executable . "~/sellpy/sellpy/node_modules/.bin/standard"))
+               '(flycheck-javascript-eslint-executable . "~/sellpy/sellpy/node_modules/.bin/eslint"))
   (add-to-list 'safe-local-variable-values
-               '(flycheck-javascript-standard-executable . "~/sellpy/admin/node_modules/.bin/eslint"))
+               '(flycheck-javascript-eslint-executable . "~/sellpy/admin/node_modules/.bin/eslint"))
   (add-to-list 'safe-local-variable-values
                '(flycheck-javascript-standard-executable . "~/sellpy/parsoku/node_modules/.bin/standard"))
   (add-to-list 'safe-local-variable-values
-               '(flycheck-javascript-standard-executable . "~/sellpy/partner-store/node_modules/.bin/standard"))
+               '(flycheck-javascript-eslint-executable . "~/sellpy/partner-store/node_modules/.bin/eslint"))
   (setq flycheck-ghc-args '("-dynamic"))
   (evil-leader/set-key "f c n" 'flycheck-next-error)
   (evil-leader/set-key "f c p" 'flycheck-previous-error))
@@ -305,6 +306,9 @@
   (which-key-mode))
 
 (use-package prettier-js
+  :ensure t)
+
+(use-package markdown-mode
   :ensure t)
 
 (tool-bar-mode -1)
